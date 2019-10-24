@@ -6,6 +6,7 @@ use DateTime;
 use DateTimeZone;
 use Spatie\CalendarLinks\Generator;
 use Spatie\CalendarLinks\Generators\Ics;
+use Spatie\CalendarLinks\Link;
 use Spatie\CalendarLinks\Tests\TestCase;
 
 class IcsGeneratorTest extends TestCase
@@ -93,5 +94,52 @@ class IcsGeneratorTest extends TestCase
                 'TIME' => DateTime::createFromFormat('Y-m-d H:i', '2018-02-01 08:15', new DateTimeZone('UTC')),
             ]])->generate($this->createShortEventLink())
         );
+    }
+
+    /** @test */
+    public function it_can_generate_an_ics_timezoned_link(): void
+    {
+        $this->assertMatchesSnapshot(
+            $this->generator([], [
+                'format' => Ics::FORMAT_FILE,
+            ])->generate($this->createTimezonedLink())
+        );
+    }
+
+    /** @test */
+    public function it_can_generate_an_ics_timezoned_all_day_link(): void
+    {
+        $this->assertMatchesSnapshot(
+            $this->generator([], [
+                'format' => Ics::FORMAT_FILE,
+            ])->generate($this->createTimezonedAllDayLink())
+        );
+    }
+
+    protected function createTimezonedAllDayLink(): Link
+    {
+        $description = <<<'EOF'
+With balloons, clowns and stuff
+Bring a dog, bring a frog
+EOF;
+
+        return Link::createAllDay(
+            'Birthday in Paris',
+            DateTime::createFromFormat('Y-m-d H:i', '2018-02-01 09:00', new DateTimeZone('Europe/Paris'))
+        )->description($description)->address('Party Lane 1A, 1337 Funtown');
+    }
+
+    protected function createTimezonedLink(): Link
+    {
+        $description = <<<'EOF'
+With balloons, clowns and stuff
+Bring a dog, bring a frog
+EOF;
+
+        return Link::create(
+            'Flight from Paris to Tokyo',
+            DateTime::createFromFormat('Y-m-d H:i', '2018-02-01 09:00', new DateTimeZone('Europe/Paris')),
+            DateTime::createFromFormat('Y-m-d H:i', '2018-02-01 18:00', new DateTimeZone('Asia/Tokyo'))
+        )->description($description)->address('Party Lane 1A, 1337 Funtown');
     }
 }

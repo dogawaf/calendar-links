@@ -22,14 +22,6 @@
       <code><![CDATA[$dateFormat]]></code>
     </MissingPropertyType>
   </file>
-  <file src="src/Generators/Ics.php">
-    <MissingDocblockType>
-      <code><![CDATA[protected $dateFormat = 'Ymd';]]></code>
-    </MissingDocblockType>
-    <MissingPropertyType>
-      <code><![CDATA[$dateFormat]]></code>
-    </MissingPropertyType>
-  </file>
   <file src="src/Generators/Yahoo.php">
     <MissingDocblockType>
       <code><![CDATA[protected $dateFormat = 'Ymd';]]></code>
