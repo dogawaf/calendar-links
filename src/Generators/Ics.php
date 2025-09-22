@@ -211,9 +211,7 @@ class Ics implements Generator
 
     private function buildLink(VCalendar $vcalendar): string
     {
-        $propertiesAndComponents = str_replace("\r\n", '%0d%0a', $vcalendar->serialize());
-
-        return 'data:text/calendar;charset=utf8;base64,'.base64_encode($propertiesAndComponents);
+        return 'data:text/calendar;charset=utf8;base64,'.base64_encode($vcalendar->serialize());
     }
 
     private function buildFile(VCalendar $vcalendar): string
